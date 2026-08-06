@@ -8,6 +8,9 @@ A lightweight, high-performance xUnit test environment built on **.NET 10.0** fo
 
 - 🧩 **`Solutions/`**: Individual problem solution files and their corresponding xUnit test files.
 - 🧰 **`Common/`**: Shared data structures (`ListNode`, `TreeNode`) and build helpers (`TestHelpers.cs`).
+- **`Templates/`**: Boilerplate templates for solution and test files:
+  - `SolutionBoilerplate.cs`
+  - `SolutionTestsBoilerplate.cs`
 
 ---
 
@@ -16,7 +19,7 @@ A lightweight, high-performance xUnit test environment built on **.NET 10.0** fo
 Follow these simple steps when solving a new problem (e.g. `P2_AddTwoNumbers`):
 
 1. **Pick problem ID and name**: `P2_AddTwoNumbers`
-2. **Create Solution File** (`Solutions/P2_AddTwoNumbers.cs`):
+2. **Create Solution File** (`Solutions/P2_AddTwoNumbers.cs` or copy from `Templates/SolutionBoilerplate.cs`):
 
    ```csharp
    namespace LeetCodeTestbench.Solutions.P2_AddTwoNumbers;
@@ -26,7 +29,8 @@ Follow these simple steps when solving a new problem (e.g. `P2_AddTwoNumbers`):
    }
    ```
 
-3. **Create Test File** (`Solutions/P2_AddTwoNumbersTests.cs`):
+3. **Create Test File** (`Solutions/P2_AddTwoNumbersTests.cs` or copy
+   from `Templates/SolutionTestsBoilerPlate.cs`):
 
    ```csharp
    namespace LeetCodeTestbench.Tests.P2_AddTwoNumbers;
