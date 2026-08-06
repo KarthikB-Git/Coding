@@ -7,7 +7,8 @@
 
 ## Visual Studio & IDE files
 .vs/
-.vscode/
+.vscode/launch.json
+.vscode/settings.json
 .idea/
 *.user
 *.userprefs

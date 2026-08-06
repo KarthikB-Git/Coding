@@ -1,0 +1,55 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/LeetCodeSandbox/LeetCodeSandbox.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary;ForceNoAlign"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/LeetCodeSandbox/LeetCodeSandbox.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Create New Solution & Test",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "D:\\Academics\\Coding\\Coding\\scripts\\New-Solution.ps1",
+                "-Name",
+                "${input:problemName}"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "problemName",
+            "type": "promptString",
+            "description": "Enter problem name (e.g. P1470_ShuffleTheArray):",
+            "default": "P1_TwoSum"
+        }
+    ]
+}
