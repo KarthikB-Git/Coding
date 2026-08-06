@@ -3,12 +3,15 @@
 ## Project Structure
 
 - `Common/`: Data structures (`ListNode`, `TreeNode`) and build helpers (`TestHelpers.cs`).
+- `Templates/`: Boilerplate templates for solution and test files:
+  - `SolutionBoilerplate.cs`
+  - `SolutionTestsBoilerplate.cs`
 - `Solutions/`: Individual problem solution files and their corresponding xUnit test files.
 
 ## Adding a new problem
 
 1. Pick the next number and name, e.g. `0002_AddTwoNumbers`.
-2. Create `Solutions/0002_AddTwoNumbers.cs`:
+2. Create `Solutions/0002_AddTwoNumbers.cs` (or copy from `Templates/SolutionBoilerplate.cs`):
    ```csharp
    namespace LeetCodeTestbench.Solutions.P0002_AddTwoNumbers;
 
@@ -16,10 +19,11 @@
        // Paste LeetCode boilerplate here
    }
    ```
-3. Create `Solutions/0002_AddTwoNumbersTests.cs`:
+3. Create `Solutions/0002_AddTwoNumbersTests.cs` (or copy from `Templates/SolutionTestsBoilerplate.cs`):
    ```csharp
    namespace LeetCodeTestbench.Tests.P0002_AddTwoNumbers;
 
+   using LeetCodeTestbench.Common;
    using LeetCodeTestbench.Solutions.P0002_AddTwoNumbers;
    using Xunit;
 
