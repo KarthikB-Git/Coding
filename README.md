@@ -6,7 +6,9 @@
 
 ## 🚀 Mission Control
 
-Welcome to my personal vault of algorithmic puzzles, technical challenges, and interview battle scars. This repository is a living document of my growth as a developer, capturing the logic behind every problem I've tackled across various platforms and real-world scenarios.
+Welcome to my personal workspace for algorithmic puzzles, technical challenges, and interview preparation.
+
+Currently, this repository features an **automated C# xUnit Testbench** (`LeetCodeSandbox`), allowing solutions to be developed, tested, and iterated upon using unit tests.
 
 ## 🏗️ The Blueprint
 
@@ -19,36 +21,57 @@ My approach to organizing this repository is driven by context, not just syntax:
 
 ---
 
-## 📂 Repository Anatomy
+## 🏗️ Repository Anatomy
 
-To ensure consistency and clarity, every problem is stored in its own dedicated directory. This standard structure makes it easy to review the problem statement, the logic, and the verification at a glance:
+The workspace is organized into projects designed for problem solving and continuous test-driven iteration:
 
 ```text
-Problem-Name/
-├── problem.txt       # The question, constraints, and explanation
-├── solution.[ext]    # The code implementation (any language)
-└── testcases.txt     # Input/Output samples for verification
+Coding/
+├── LeetCodeSandbox/           # C# (.NET 10.0) xUnit Testbench
+│   ├── Common/                # Data structures & test helpers
+│   │   ├── ListNode.cs        # Singly-linked list node signature
+│   │   ├── TreeNode.cs        # Binary tree node signature
+│   │   └── TestHelpers.cs     # BuildList, ToArray, BuildTree helpers
+│   ├── Solutions/             # Modular LeetCode solutions & unit tests
+│   │   ├── 0001_TwoSum.cs     # Problem solution
+│   │   └── 0001_TwoSumTests.cs # xUnit unit test suite
+│   ├── LeetCodeSandbox.csproj
+│   └── LeetCodeSandbox.sln
+└── README.md
 ```
 
 ---
 
-## 🌈 Polyglot by Design
+## ⚡ Problem-Solving Workflow
 
-The logic remains the same, even if the tools change. This repository is **language-agnostic**. Depending on the day, the performance requirements, or just a whim, you might find solutions in any number of languages.
+Every problem in `LeetCodeSandbox/Solutions` is kept isolated in its own namespace:
 
-I believe that being a "Good Developer" means being able to adapt to the best tool for the job. Here, the focus is on **Time Complexity, Space Complexity, and Elegant Logic.**
+1. **Solution File** (`Solutions/<XXXX>_<ProblemName>.cs`):
+   - Namespace: `LeetCodeTestbench.Solutions.P<XXXX>_<ProblemName>`
+   - Contains the `public class Solution` matching LeetCode's method signatures directly.
+
+2. **Test File** (`Solutions/<XXXX>_<ProblemName>Tests.cs`):
+   - Namespace: `LeetCodeTestbench.Tests.P<XXXX>_<ProblemName>`
+   - Uses `[Theory]` and `[InlineData]` / `TestHelpers` to verify test cases automatically.
 
 ---
 
-## 🛠️ Antigravity's Personal Touch: The "Aha!" Moment
+## 🛠️ Commands & Running Tests
 
-Every solution here has a story. Sometimes it's a brute-force approach that eventually evolved into an optimized O(log N) masterpiece. Other times, it's a simple, readable solution that prioritizes clarity over micro-optimizations.
+From inside `LeetCodeSandbox/`:
 
-**My Core Principles:**
-
-1. **Understand the "Why"**: Don't just solve it; understand why the solution works.
-2. **Cleanliness is Godliness**: Code is read more often than it is written.
-3. **Never Stop Refactoring**: There is always a better way to do it.
+- **Run all tests:**
+  ```bash
+  dotnet test
+  ```
+- **Auto-run tests on save:**
+  ```bash
+  dotnet watch test
+  ```
+- **Run tests for a single problem:**
+  ```bash
+  dotnet test --filter "FullyQualifiedName~P0001_TwoSum"
+  ```
 
 ---
 
@@ -57,6 +80,9 @@ Every solution here has a story. Sometimes it's a brute-force approach that even
 ![Algorithms](https://img.shields.io/badge/Focus-Algorithms-blueviolet?style=for-the-badge)
 ![Data Structures](https://img.shields.io/badge/Focus-Data%20Structures-ff69b4?style=for-the-badge)
 ![Problem Solving](https://img.shields.io/badge/Skill-Problem%20Solving-green?style=for-the-badge)
+![.NET 10](https://img.shields.io/badge/.NET-10.0-blue?style=for-the-badge&logo=dotnet)
+![xUnit](https://img.shields.io/badge/Testing-xUnit-red?style=for-the-badge)
+![Focus](https://img.shields.io/badge/Focus-Algorithms%20%26%20Data%20Structures-violet?style=for-the-badge)
 
 ---
 
