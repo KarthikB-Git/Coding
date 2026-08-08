@@ -33,24 +33,24 @@ $SolutionsDir = Join-Path $SandboxDir "Solutions"
 $TemplatesDir = Join-Path $SandboxDir "Templates"
 
 $SolutionTemplatePath = Join-Path $TemplatesDir "SolutionBoilerplate.cs"
-$TestTemplatePath     = Join-Path $TemplatesDir "SolutionTestsBoilerplate.cs"
+$TestTemplatePath = Join-Path $TemplatesDir "SolutionTestsBoilerplate.cs"
 
 if (-not (Test-Path $SolutionsDir)) {
     New-Item -ItemType Directory -Path $SolutionsDir -Force | Out-Null
 }
 
 $SolutionFilePath = Join-Path $SolutionsDir "$CleanName.cs"
-$TestFilePath     = Join-Path $SolutionsDir "${CleanName}Test.cs"
+$TestFilePath = Join-Path $SolutionsDir "${CleanName}Test.cs"
 
 # 1. Load Solution Template
 if (Test-Path $SolutionTemplatePath) {
     $SolutionContent = Get-Content -Path $SolutionTemplatePath -Raw
-} else {
+}
+else {
     $SolutionContent = @"
 namespace LeetCodeTestbench.Solutions.PXXXX_ProblemName;
 
-// Problem Link: https://leetcode.com/problems/problem-name/
-// Own namespace per problem allows using "Solution" as the class name.
+// https://leetcode.com/problems/problem-name/
 public class Solution
 {
     // Paste LeetCode solution method signature here:
@@ -65,7 +65,8 @@ public class Solution
 # 2. Load Test Template
 if (Test-Path $TestTemplatePath) {
     $TestContent = Get-Content -Path $TestTemplatePath -Raw
-} else {
+}
+else {
     $TestContent = @"
 using LeetCodeTestbench.Common;
 using LeetCodeTestbench.Solutions.PXXXX_ProblemName;
@@ -124,7 +125,8 @@ $TestContent = $TestContent -replace 'PXXXX_ProblemName', $CleanName
 # Create Solution File
 if (Test-Path $SolutionFilePath) {
     Write-Warning "Solution file already exists: $SolutionFilePath"
-} else {
+}
+else {
     Set-Content -Path $SolutionFilePath -Value $SolutionContent -Encoding UTF8
     Write-Host "Created Solution File: $SolutionFilePath" -ForegroundColor Green
 }
@@ -132,7 +134,8 @@ if (Test-Path $SolutionFilePath) {
 # Create Test File
 if (Test-Path $TestFilePath) {
     Write-Warning "Test file already exists: $TestFilePath"
-} else {
+}
+else {
     Set-Content -Path $TestFilePath -Value $TestContent -Encoding UTF8
     Write-Host "Created Test File: $TestFilePath" -ForegroundColor Green
 }
