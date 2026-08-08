@@ -10,6 +10,8 @@
   <ItemGroup>
     <None Include="Templates\**" />
     <Compile Remove="Templates\**" />
+    <None Update="Solutions\**\*.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="TestCases\**\*.json" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
   <ItemGroup>
