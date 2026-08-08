@@ -40,6 +40,9 @@ Coding/
 │   ├── Solutions/                # Modular LeetCode solutions & unit tests
 │   │   ├── P1_TwoSum.cs          # Problem solution
 │   │   └── P1_TwoSumTests.cs     # xUnit test suite
+│   ├── Templates/                # Boilerplate templates for solution & test files
+│   │   ├── SolutionBoilerplate.cs
+│   │   └── SolutionTestsBoilerplate.cs
 │   ├── LeetCodeSandbox.csproj
 │   └── LeetCodeSandbox.slnx
 └── README.md
@@ -60,6 +63,57 @@ Every problem in `LeetCodeSandbox/Solutions` is kept isolated in its own namespa
 | :--- | :--- | :--- |
 | **Solution** | `Solutions/P<ID>_<Name>.cs` | `LeetCodeTestbench.Solutions.P<ID>_<Name>` |
 | **Test Suite** | `Solutions/P<ID>_<Name>Tests.cs` | `LeetCodeTestbench.Tests.P<ID>_<Name>` |
+
+### ➕ Adding a New Problem
+
+Follow these simple steps when solving a new problem (e.g. `P2_AddTwoNumbers`):
+
+1. **Pick problem ID and name**: `P2_AddTwoNumbers`
+2. **Create Solution File** (`Solutions/P2_AddTwoNumbers.cs` or copy from `Templates/SolutionBoilerplate.cs`):
+
+   ```csharp
+   namespace LeetCodeTestbench.Solutions.P2_AddTwoNumbers;
+
+   public class Solution {
+       // Paste LeetCode boilerplate here
+   }
+   ```
+
+3. **Create Test File** (`Solutions/P2_AddTwoNumbersTests.cs` or copy from `Templates/SolutionTestsBoilerplate.cs`):
+
+   ```csharp
+   namespace LeetCodeTestbench.Tests.P2_AddTwoNumbers;
+
+   using LeetCodeTestbench.Solutions.P2_AddTwoNumbers;
+   using Xunit;
+
+   public class SolutionTests {
+       private readonly Solution _sut = new();
+
+       [Theory]
+       [InlineData(...)]
+       public void TestMethod(...) { ... }
+   }
+   ```
+
+4. **Run Test for Specific Problem**:
+   ```bash
+   dotnet test --filter "FullyQualifiedName~P2_AddTwoNumbers"
+   ```
+
+---
+
+## 💡 Linked Lists & Binary Trees Helpers
+
+Use `Common/TestHelpers.cs` to construct `ListNode` or `TreeNode` test inputs cleanly:
+
+```csharp
+// Build a singly linked list (1 -> 2 -> 4)
+var head = TestHelpers.BuildList(1, 2, 4);
+
+// Build a binary tree from array representation
+var tree = TestHelpers.BuildTree(3, 9, 20, null, null, 15, 7);
+```
 
 ---
 
