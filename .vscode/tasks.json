@@ -53,7 +53,7 @@
                 "-File",
                 "D:\\Academics\\Coding\\Coding\\scripts\\New-SolutionFromUrl.ps1",
                 "-Url",
-                "${input:problemUrl}"
+                "'${input:problemUrl}'"
             ],
             "problemMatcher": [],
             "presentation": {

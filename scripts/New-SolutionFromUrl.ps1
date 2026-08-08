@@ -7,11 +7,17 @@ param (
 # ------------------------------------------------------------------
 # 1. Extract the title slug from the URL
 # ------------------------------------------------------------------
-if ($Url -notmatch '/problems/([a-z0-9\-]+)') {
-    Write-Error "Could not find a problem slug in URL: '$Url'. Expected something like https://leetcode.com/problems/two-sum/"
+$CleanInput = $Url.Trim("'", '"', ' ')
+if ($CleanInput -match '/problems/([a-z0-9\-]+)') {
+    $Slug = $Matches[1]
+}
+elseif ($CleanInput -match '^[a-z0-9\-]+$') {
+    $Slug = $CleanInput
+}
+else {
+    Write-Error "Could not extract problem slug from input: '$Url'. Expected a LeetCode problem URL or slug (e.g. https://leetcode.com/problems/two-sum/)"
     exit 1
 }
-$Slug = $Matches[1]
 
 # ------------------------------------------------------------------
 # 2. Query LeetCode's GraphQL endpoint for problem details
@@ -26,6 +32,8 @@ query questionData(`$titleSlug: String!) {
       langSlug
       code
     }
+    content
+    exampleTestcases
   }
 }
 "@
@@ -61,12 +69,68 @@ if (-not $Question -or -not $Question.title) {
 }
 
 # ------------------------------------------------------------------
-# 3. Build CleanName: P{frontendId}_{PascalCaseTitle}
+# 3. Helper functions & CleanName: P{frontendId}_{PascalCaseTitle}
 # ------------------------------------------------------------------
 function ConvertTo-PascalCase {
     param([string]$Text)
     $Words = $Text -split '[^a-zA-Z0-9]+' | Where-Object { $_ -ne '' }
     ($Words | ForEach-Object { $_.Substring(0,1).ToUpper() + $_.Substring(1) }) -join ''
+}
+
+function Format-CSharpValue {
+    param(
+        [string]$RawValue,
+        [string]$ParamType
+    )
+
+    if (-not $RawValue) { return "null" }
+    $Raw = $RawValue.Trim()
+
+    if ($Raw -eq "null") { return "null" }
+
+    # ListNode
+    if ($ParamType -eq "ListNode" -or $ParamType -eq "ListNode?") {
+        if ($Raw -match '^\[(.*)\]$') {
+            $inner = $Matches[1].Trim()
+            if ([string]::IsNullOrWhiteSpace($inner)) { return "null" }
+            return "TestHelpers.BuildList($inner)"
+        }
+    }
+
+    # TreeNode
+    if ($ParamType -eq "TreeNode" -or $ParamType -eq "TreeNode?") {
+        if ($Raw -match '^\[(.*)\]$') {
+            $inner = $Matches[1].Trim()
+            if ([string]::IsNullOrWhiteSpace($inner)) { return "null" }
+            return "TestHelpers.BuildTree($inner)"
+        }
+    }
+
+    # Arrays / Lists
+    if ($Raw -match '^\[(.*)\]$') {
+        $inner = $Matches[1].Trim()
+        if ([string]::IsNullOrWhiteSpace($inner)) {
+            $elemType = $ParamType -replace '\[\]', '' -replace 'IList<', '' -replace 'List<', '' -replace '>', ''
+            if ([string]::IsNullOrWhiteSpace($elemType)) { $elemType = "int" }
+            return "Array.Empty<$elemType>()"
+        }
+
+        # 2D array
+        if ($inner.StartsWith("[")) {
+            $subArrays = [regex]::Matches($inner, '\[(.*?)\]') | ForEach-Object { "new[] { $($_.Groups[1].Value) }" }
+            return "new[] { $($subArrays -join ', ') }"
+        }
+        else {
+            return "new[] { $inner }"
+        }
+    }
+
+    # Strings
+    if ($ParamType -eq "string" -and -not $Raw.StartsWith('"')) {
+        return "`"$Raw`""
+    }
+
+    return $Raw
 }
 
 $PascalTitle = ConvertTo-PascalCase -Text $Question.title
@@ -76,26 +140,100 @@ $KebabSlug = $Slug
 Write-Host "Resolved: $CleanName ($($Question.difficulty))" -ForegroundColor Green
 
 # ------------------------------------------------------------------
-# 4. Extract the C# method signature and method name from codeSnippets
+# 4. Extract C# method signature, method name, return type & params
 # ------------------------------------------------------------------
 $CSharpSnippet = $Question.codeSnippets | Where-Object { $_.langSlug -eq 'csharp' } | Select-Object -First 1
 
 $MethodSignature = $null
-$MethodName = "~#methodname#~"
+$MethodName = "TwoSum"
+$ReturnType = "void"
+$Params = @()
 
 if ($CSharpSnippet) {
-    # Grab the line(s) between the outer "public class Solution {" and the final closing brace
     $Lines = $CSharpSnippet.code -split "`n"
-    $Inner = $Lines | Select-Object -Skip 1 | Select-Object -SkipLast 1
-    $MethodSignature = ($Inner -join "`n").TrimEnd()
+    $Inner = ($Lines | Select-Object -Skip 1 | Select-Object -SkipLast 1) -join "`n"
+    $MethodSignature = $Inner.TrimEnd()
 
-    if ($MethodSignature -match '\b([A-Za-z0-9_]+)\s*\(') {
-        $MethodName = $Matches[1]
+    if ($MethodSignature -match 'public\s+([\w<>\[\]\?]+)\s+(\w+)\s*\((.*?)\)') {
+        $ReturnType = $Matches[1]
+        $MethodName = $Matches[2]
+        $paramString = $Matches[3]
+        if (-not [string]::IsNullOrWhiteSpace($paramString)) {
+            foreach ($p in ($paramString -split ',')) {
+                $parts = $p.Trim() -split '\s+'
+                if ($parts.Length -ge 2) {
+                    $Params += [PSCustomObject]@{ Type = $parts[0]; Name = $parts[1] }
+                }
+            }
+        }
     }
 }
 
 # ------------------------------------------------------------------
-# 5. Resolve paths
+# 5. Extract example test cases from HTML description
+# ------------------------------------------------------------------
+$GeneratedTestCode = $null
+
+if ($Question.content -and $Params.Count -gt 0) {
+    $Regex = '(?s)<strong>Input:</strong>\s*(.*?)\s*<strong>Output:</strong>\s*(.*?)(?=\s*<strong>Explanation:</strong>|\s*</pre>|\s*<strong|\s*&nbsp;|\r?\n\r?\n|$)'
+    $MatchesFound = [regex]::Matches($Question.content, $Regex)
+
+    if ($MatchesFound.Count -gt 0) {
+        $InlineDataList = @()
+        $HasComplexTypes = ($ReturnType -match 'ListNode|TreeNode') -or ($Params | Where-Object { $_.Type -match 'ListNode|TreeNode' })
+
+        if (-not $HasComplexTypes) {
+            foreach ($m in $MatchesFound) {
+                $rawInput = $m.Groups[1].Value -replace '&quot;', '"' -replace '&lt;', '<' -replace '&gt;', '>' -replace '<.*?>', '' -replace '\s+', ' '
+                $rawOutput = $m.Groups[2].Value -replace '&quot;', '"' -replace '&lt;', '<' -replace '&gt;', '>' -replace '<.*?>', '' -replace '\s+', ' '
+
+                $argValues = @()
+                foreach ($p in $Params) {
+                    $pName = [regex]::Escape($p.Name)
+                    if ($rawInput -match "$pName\s*=\s*(\[.*?\]|`".*?`"|\S+)") {
+                        $valStr = $Matches[1].TrimEnd(',')
+                        $argValues += Format-CSharpValue -RawValue $valStr -ParamType $p.Type
+                    }
+                }
+
+                $formattedOutput = Format-CSharpValue -RawValue $rawOutput -ParamType $ReturnType
+
+                if ($argValues.Count -eq $Params.Count) {
+                    $allArgs = ($argValues + $formattedOutput) -join ', '
+                    $InlineDataList += "    [InlineData($allArgs)]"
+                }
+            }
+
+            if ($InlineDataList.Count -gt 0) {
+                $paramDecls = @()
+                foreach ($p in $Params) {
+                    $paramDecls += "$($p.Type) $($p.Name)"
+                }
+                $expType = $ReturnType
+                if ($ReturnType.StartsWith("IList<")) {
+                    $expType = ($ReturnType -replace 'IList<', '' -replace '>', '') + "[]"
+                }
+                $paramDecls += "$expType expected"
+                $paramDeclStr = $paramDecls -join ', '
+                $argNameStr = ($Params.Name) -join ', '
+                $InlineStr = $InlineDataList -join "`n"
+
+                $GeneratedTestCode = @"
+    [Theory]
+$InlineStr
+    public void ${MethodName}_ReturnsExpectedResult($paramDeclStr)
+    {
+        var actual = _sut.${MethodName}($argNameStr);
+        Assert.Equal(expected, actual);
+    }
+"@
+            }
+        }
+    }
+}
+
+# ------------------------------------------------------------------
+# 6. Resolve paths
 # ------------------------------------------------------------------
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $WorkspaceRoot = Split-Path -Parent $ScriptDir
@@ -114,7 +252,7 @@ $SolutionFilePath = Join-Path $SolutionsDir "$CleanName.cs"
 $TestFilePath = Join-Path $SolutionsDir "${CleanName}Test.cs"
 
 # ------------------------------------------------------------------
-# 6. Load templates
+# 7. Load templates and perform replacements
 # ------------------------------------------------------------------
 if (Test-Path $SolutionTemplatePath) {
     $SolutionContent = Get-Content -Path $SolutionTemplatePath -Raw
@@ -135,16 +273,34 @@ public class Solution
 "@
 }
 
-if (Test-Path $TestTemplatePath) {
+if ($GeneratedTestCode) {
+    $TestContent = @"
+using LeetCodeTestbench.Common;
+using LeetCodeTestbench.Solutions.$CleanName;
+using Xunit;
+
+namespace LeetCodeTestbench.Tests.$CleanName;
+
+public class SolutionTests
+{
+    private readonly Solution _sut = new();
+
+$GeneratedTestCode
+}
+"@
+}
+elseif (Test-Path $TestTemplatePath) {
     $TestContent = Get-Content -Path $TestTemplatePath -Raw
+    $TestContent = $TestContent -replace 'PXXXX_ProblemName', $CleanName
+    $TestContent = $TestContent -replace 'TwoSum', $MethodName
 }
 else {
     $TestContent = @"
 using LeetCodeTestbench.Common;
-using LeetCodeTestbench.Solutions.PXXXX_ProblemName;
+using LeetCodeTestbench.Solutions.$CleanName;
 using Xunit;
 
-namespace LeetCodeTestbench.Tests.PXXXX_ProblemName;
+namespace LeetCodeTestbench.Tests.$CleanName;
 
 public class SolutionTests
 {
@@ -164,14 +320,8 @@ public class SolutionTests
 "@
 }
 
-# ------------------------------------------------------------------
-# 7. Perform template replacements
-# ------------------------------------------------------------------
 $SolutionContent = $SolutionContent -replace 'PXXXX_ProblemName', $CleanName
 $SolutionContent = $SolutionContent -replace 'problem-name', $KebabSlug
-
-$TestContent = $TestContent -replace 'PXXXX_ProblemName', $CleanName
-$TestContent = $TestContent -replace '~#methodname#~', $MethodName
 
 if ($MethodSignature) {
     if ($MethodSignature -match '\{\s*\}') {
