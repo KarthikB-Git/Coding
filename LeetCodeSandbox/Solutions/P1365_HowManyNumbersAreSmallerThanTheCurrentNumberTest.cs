@@ -13,10 +13,8 @@ public class SolutionTests
     [InlineData(new[] { 7, 7, 7, 7 }, new[] { 0, 0, 0, 0 })]
     public void Solution_ReturnsExpectedResult(int[] nums, int[] expected)
     {
-        // Act
         var actual = _sut.SmallerNumbersThanCurrent(nums);
 
-        // Assert
         Assert.Equal(expected, actual);
     }
 }
