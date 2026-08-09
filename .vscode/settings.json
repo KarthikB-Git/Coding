@@ -1,4 +1,5 @@
 {
     "FSharp.suggestGitignore": false,
-    "dotnet-test-explorer.testProjectPath": "./LeetCodeSandbox"
+    "dotnet-test-explorer.testProjectPath": "./LeetCodeSandbox",
+    "terminal.integrated.defaultLocation": "editor"
 }

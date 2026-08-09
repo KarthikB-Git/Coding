@@ -89,29 +89,6 @@ public class SolutionTests
         // Assert
         // Assert.Equal(expected, actual);
     }
-
-    // Example 2: Testing ListNode (Linked List) inputs with TestHelpers
-    // [Fact]
-    // public void Solution_LinkedListExample()
-    // {
-    //     var head = TestHelpers.BuildList(1, 2, 4);
-    //     var expected = new[] { 1, 2, 4 };
-    //     
-    //     var resultNode = _sut.SomeLinkedListMethod(head);
-    //     
-    //     Assert.Equal(expected, TestHelpers.ToArray(resultNode));
-    // }
-
-    // Example 3: Testing TreeNode (Binary Tree) inputs with TestHelpers
-    // [Fact]
-    // public void Solution_BinaryTreeExample()
-    // {
-    //     var root = TestHelpers.BuildTree(3, 9, 20, null, null, 15, 7);
-    //     
-    //     var result = _sut.SomeTreeMethod(root);
-    //     
-    //     Assert.Equal(3, result);
-    // }
 }
 "@
 }

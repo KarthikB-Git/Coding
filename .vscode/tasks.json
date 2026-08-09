@@ -42,6 +42,24 @@
                 "reveal": "always",
                 "panel": "shared"
             }
+        },
+        {
+            "label": "Create New Solution & Test (from LeetCode URL)",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "D:\\Academics\\Coding\\Coding\\scripts\\New-SolutionFromUrl.ps1",
+                "-Url",
+                "'${input:problemUrl}'"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
         }
     ],
     "inputs": [
@@ -50,6 +68,12 @@
             "type": "promptString",
             "description": "Enter problem name (e.g. P1470_ShuffleTheArray):",
             "default": "P1_TwoSum"
+        },
+        {
+            "id": "problemUrl",
+            "type": "promptString",
+            "description": "Paste LeetCode problem URL (e.g. https://leetcode.com/problems/two-sum/):",
+            "default": "https://leetcode.com/problems/two-sum/"
         }
     ]
 }
