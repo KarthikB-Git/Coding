@@ -5,23 +5,26 @@ public class Solution
 {
     public int EvalRpn(string[] tokens)
     {
-        List<string> tokenList = [.. tokens];
-        for (int i = 0; i < tokenList.Count; i++)
+        Stack<int> stack = [];
+        foreach (var t in tokens)
         {
-            if (int.TryParse(tokenList[i], out var _)) continue;
-            int res;
-            if ("+" == tokenList[i]) res = int.Parse(tokenList[i - 2]) + int.Parse(tokenList[i - 1]);
-            else if ("-" == tokenList[i]) res = int.Parse(tokenList[i - 2]) - int.Parse(tokenList[i - 1]);
-            else if ("/" == tokenList[i]) res = int.Parse(tokenList[i - 2]) / int.Parse(tokenList[i - 1]);
-            else res = int.Parse(tokenList[i - 2]) * int.Parse(tokenList[i - 1]);
-            tokenList[i - 2] = res.ToString();
-            tokenList.RemoveAt(i);
-            tokenList.RemoveAt(i - 1);
-            break;
+            if (int.TryParse(t, out var val))
+            {
+                stack.Push(val);
+            }
+            else
+            {
+                int res;
+                var b = stack.Pop();
+                var a = stack.Pop();
+                if (t == "+") res = a + b;
+                else if (t == "-") res = a - b;
+                else if (t == "/") res = a / b;
+                else res = a * b;
+                stack.Push(res);
+            }
         }
-
-        var ans = int.Parse(tokenList[0]);
-        return ans;
+        return stack.Pop();
     }
 }
 
