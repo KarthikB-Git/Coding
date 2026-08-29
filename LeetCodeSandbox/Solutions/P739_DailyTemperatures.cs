@@ -6,16 +6,15 @@ public class Solution
     public int[] DailyTemperatures(int[] temperatures)
     {
         int[] ans = new int[temperatures.Length];
-        for(int i=0;i<temperatures.Length;i++)
+        Stack<int> stack = new Stack<int>();
+        for (int i = 0; i < temperatures.Length; i++)
         {
-            for (int j = i + 1; j < temperatures.Length; j++)
+            while (stack.Count > 0 && temperatures[stack.Peek()] < temperatures[i])
             {
-                if (temperatures[i] < temperatures[j])
-                {
-                    ans[i] = j - i;
-                    break;
-                }
+                int j = stack.Pop();
+                ans[j] = i - j;
             }
+            stack.Push(i);
         }
         return ans;
     }
