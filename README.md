@@ -129,20 +129,30 @@ Run all commands from inside the `LeetCodeSandbox/` directory:
 
 ---
 
-## 📝 Committing Rules
+# 📝 Committing Rules
 
-All commit messages follow a standardized syntax: `<type>(<problem>): <short description>`
+All commit messages follow a standardized syntax:
 
 ```text
 <type>(<problem>): <short description>
 ```
+
+`<problem>` should match the solution filename scope, e.g. `P1_TwoSum`, `P42_TrappingRainWater`.
 
 | Type | Description | Example |
 | :--- | :--- | :--- |
 | `solve` | New problem solved (solution + testbench added) | `solve(P1_TwoSum): add solution and testbench` |
 | `fix` | Correcting a previously solved solution | `fix(P2_AddTwoNumbers): resolve null pointer on empty list` |
 | `refactor` | Cleaning up solution without changing logic/tests | `refactor(P1_TwoSum): optimize hash map lookup` |
+| `perf` | Optimizing time/space complexity of a working solution | `perf(P42_TrappingRainWater): reduce to O(1) space using two pointers` |
 | `test` | Adding/adjusting test cases without changing solution | `test(P1_TwoSum): add edge cases for negative numbers` |
+| `docs` | Adding explanations, complexity notes, or comments to a solution | `docs(P200_NumIslands): add BFS vs DFS complexity notes` |
+| `wip` | Incomplete/in-progress solution, committed as a checkpoint | `wip(P4_MedianOfTwoSortedArrays): partial binary search approach` |
+| `revert` | Reverting a previous commit | `revert(P15_3Sum): revert perf change causing TLE` |
+| `style` | Formatting, naming, whitespace — no logic change | `style(P1_TwoSum): rename variables for clarity` |
+| `deps` | Adding/updating NuGet packages or project dependencies | `deps: add xUnit and FluentAssertions packages` |
+| `ci` | Changes to build/test automation, VS Code tasks, scripts | `ci: add URL-based solution scaffold task` |
+| `topic` | Tagging a solution under a pattern/category | `topic(P1_TwoSum): tag as hash-map pattern` |
 | `chore` | Project setup, README updates, common helpers, etc. | `chore(readme): update commit guidelines` |
 
 ---
