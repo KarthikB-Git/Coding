@@ -1,6 +1,8 @@
 ﻿namespace LeetCodeTestbench.Solutions.P739_DailyTemperatures;
 
 // https://leetcode.com/problems/daily-temperatures/
+// Difficulty: Medium
+// Tags: Array, Stack, Monotonic Stack
 public class Solution
 {
     public int[] DailyTemperatures(int[] temperatures)

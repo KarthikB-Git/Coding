@@ -1,6 +1,8 @@
 ﻿namespace LeetCodeTestbench.Solutions.P150_EvaluateReversePolishNotation;
 
 // https://leetcode.com/problems/evaluate-reverse-polish-notation/
+// Difficulty: Medium
+// Tags: Array, Math, Stack
 public class Solution
 {
     public int EvalRpn(string[] tokens)

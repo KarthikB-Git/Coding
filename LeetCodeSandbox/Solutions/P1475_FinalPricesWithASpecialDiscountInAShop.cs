@@ -1,6 +1,8 @@
 ﻿namespace LeetCodeTestbench.Solutions.P1475_FinalPricesWithASpecialDiscountInAShop;
 
 // https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/
+// Difficulty: Easy
+// Tags: Array, Stack, Monotonic Stack
 public class Solution
 {
     public int[] FinalPrices(int[] prices)

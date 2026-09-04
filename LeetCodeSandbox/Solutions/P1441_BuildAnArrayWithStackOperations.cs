@@ -1,6 +1,8 @@
-namespace LeetCodeTestbench.Solutions.P1441_BuildAnArrayWithStackOperations;
+﻿namespace LeetCodeTestbench.Solutions.P1441_BuildAnArrayWithStackOperations;
 
 // https://leetcode.com/problems/build-an-array-with-stack-operations/
+// Difficulty: Medium
+// Tags: Array, Stack, Simulation
 public class Solution
 {
     public IList<string> BuildArray(int[] target, int n)

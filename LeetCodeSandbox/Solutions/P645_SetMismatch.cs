@@ -1,6 +1,8 @@
 ﻿namespace LeetCodeTestbench.Solutions.P645_SetMismatch;
 
 // https://leetcode.com/problems/set-mismatch/
+// Difficulty: Easy
+// Tags: Array, Hash Table, Bit Manipulation, Sorting
 public class Solution
 {
     public int[] FindErrorNums(int[] nums)

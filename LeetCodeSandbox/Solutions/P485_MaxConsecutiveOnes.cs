@@ -1,6 +1,8 @@
 ﻿namespace LeetCodeTestbench.Solutions.P485_MaxConsecutiveOnes;
 
 // https://leetcode.com/problems/max-consecutive-ones
+// Difficulty: Easy
+// Tags: Array
 public class Solution
 {
     public int FindMaxConsecutiveOnes(int[] nums)

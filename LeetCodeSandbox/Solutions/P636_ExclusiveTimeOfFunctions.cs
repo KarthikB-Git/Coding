@@ -1,6 +1,8 @@
 ﻿namespace LeetCodeTestbench.Solutions.P636_ExclusiveTimeOfFunctions;
 
 // https://leetcode.com/problems/exclusive-time-of-functions/
+// Difficulty: Medium
+// Tags: Array, Stack
 public class Solution
 {
     public int[] ExclusiveTime(int n, IList<string> logs)
