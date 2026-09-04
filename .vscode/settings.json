@@ -1,5 +1,14 @@
 {
     "FSharp.suggestGitignore": false,
     "dotnet-test-explorer.testProjectPath": "./LeetCodeSandbox",
-    "terminal.integrated.defaultLocation": "editor"
+    "terminal.integrated.defaultLocation": "editor",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/bin": true,
+        "**/obj": true
+    }
 }
