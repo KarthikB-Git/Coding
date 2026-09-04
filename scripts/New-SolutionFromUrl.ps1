@@ -28,6 +28,10 @@ query questionData(`$titleSlug: String!) {
     questionFrontendId
     title
     difficulty
+    topicTags {
+      name
+      slug
+    }
     codeSnippets {
       langSlug
       code
@@ -136,8 +140,11 @@ function Format-CSharpValue {
 $PascalTitle = ConvertTo-PascalCase -Text $Question.title
 $CleanName = "P$($Question.questionFrontendId)_$PascalTitle"
 $KebabSlug = $Slug
+$Difficulty = $Question.difficulty
+$TopicTags = ($Question.topicTags | ForEach-Object { $_.name }) -join ', '
+if (-not $TopicTags) { $TopicTags = "None" }
 
-Write-Host "Resolved: $CleanName ($($Question.difficulty))" -ForegroundColor Green
+Write-Host "Resolved: $CleanName ($Difficulty) [Tags: $TopicTags]" -ForegroundColor Green
 
 # ------------------------------------------------------------------
 # 4. Extract C# method signature, method name, return type & params
@@ -322,6 +329,10 @@ public class SolutionTests
 
 $SolutionContent = $SolutionContent -replace 'PXXXX_ProblemName', $CleanName
 $SolutionContent = $SolutionContent -replace 'problem-name', $KebabSlug
+
+$UrlComment = "// https://leetcode.com/problems/$KebabSlug/"
+$TaggedHeader = "$UrlComment`n// Difficulty: $Difficulty`n// Tags: $TopicTags"
+$SolutionContent = $SolutionContent -replace [regex]::Escape($UrlComment), $TaggedHeader
 
 if ($MethodSignature) {
     if ($MethodSignature -match '\{\s*\}') {
