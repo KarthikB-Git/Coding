@@ -7,19 +7,24 @@ public class Solution
 {
     public int CountStudents(int[] students, int[] sandwiches)
     {
-        var rem = new int[2];
-        foreach (var s in students) rem[s]++;
-
-        foreach (var lunch in sandwiches)
+        var qStuds = new Queue<int>(students);
+        var sLunch = new Stack<int>(sandwiches.Reverse());
+        var rotations = 0;
+        while (qStuds.Count > 0 && rotations < qStuds.Count)
         {
-            if (rem[lunch] == 0)
+            if (sLunch.Peek() == qStuds.Peek())
             {
-                break;
+                sLunch.Pop();
+                qStuds.Dequeue();
+                rotations = 0;
             }
-            rem[lunch]--;
+            else
+            {
+                qStuds.Enqueue(qStuds.Dequeue());
+                rotations++;
+            }
         }
-
-        return rem.Sum();
+        return qStuds.Count;
     }
 }
 
