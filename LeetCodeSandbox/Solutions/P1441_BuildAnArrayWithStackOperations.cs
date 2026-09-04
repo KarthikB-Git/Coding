@@ -8,8 +8,8 @@ public class Solution
     public IList<string> BuildArray(int[] target, int n)
     {
         List<string> ans = [];
-        int currStream = 1;
-        foreach (int tar in target)
+        var currStream = 1;
+        foreach (var tar in target)
         {
             while (currStream < tar)
             {

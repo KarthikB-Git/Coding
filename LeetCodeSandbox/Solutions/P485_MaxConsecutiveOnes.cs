@@ -8,9 +8,9 @@ public class Solution
     public int FindMaxConsecutiveOnes(int[] nums)
     {
         int cnt = 0, max = 0;
-        for (int i = 0; i < nums.Length; i++)
+        foreach (var n in nums)
         {
-            if (nums[i] == 1)
+            if (n == 1)
             {
                 cnt += 1;
                 if (max < cnt) max = cnt;

@@ -7,11 +7,11 @@ public class Solution
 {
     public int[] FindErrorNums(int[] nums)
     {
-        int[] ans = new int[2];
-        Dictionary<int, bool> arr = new Dictionary<int, bool>();
-        foreach (int i in nums)
+        var ans = new int[2];
+        var arr = new Dictionary<int, bool>();
+        foreach (var i in nums)
         {
-            if (!arr.TryGetValue(i, out bool val))
+            if (!arr.TryGetValue(i, out var _))
             {
                 arr.Add(i, true);
             }
@@ -20,13 +20,11 @@ public class Solution
                 ans[0] = i;
             }
         }
-        for (int i = 1; i <= nums.Length; i++)
+        for (var i = 1; i <= nums.Length; i++)
         {
-            if (!arr.ContainsKey(i))
-            {
-                ans[1] = i;
-                break;
-            }
+            if (arr.ContainsKey(i)) continue;
+            ans[1] = i;
+            break;
         }
         return ans;
     }

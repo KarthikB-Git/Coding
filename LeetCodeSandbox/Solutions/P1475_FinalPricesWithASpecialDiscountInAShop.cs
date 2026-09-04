@@ -8,16 +8,14 @@ public class Solution
     public int[] FinalPrices(int[] prices)
     {
         var ans = new int[prices.Length];
-        for (int i = 0; i < prices.Length; i++)
+        for (var i = 0; i < prices.Length; i++)
         {
             ans[i] = prices[i];
-            for (int j = i + 1; j < prices.Length; j++)
+            for (var j = i + 1; j < prices.Length; j++)
             {
-                if (prices[i] >= prices[j])
-                {
-                    ans[i] -= prices[j];
-                    break;
-                }
+                if (prices[i] < prices[j]) continue;
+                ans[i] -= prices[j];
+                break;
             }
         }
         return ans;

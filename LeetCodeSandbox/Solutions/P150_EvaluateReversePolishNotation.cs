@@ -16,13 +16,15 @@ public class Solution
             }
             else
             {
-                int res;
                 var b = stack.Pop();
                 var a = stack.Pop();
-                if (t == "+") res = a + b;
-                else if (t == "-") res = a - b;
-                else if (t == "/") res = a / b;
-                else res = a * b;
+                var res = t switch
+                {
+                    "+" => a + b,
+                    "-" => a - b,
+                    "/" => a / b,
+                    _ => a * b
+                };
                 stack.Push(res);
             }
         }

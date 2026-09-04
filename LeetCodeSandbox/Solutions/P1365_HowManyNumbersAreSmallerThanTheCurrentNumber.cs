@@ -7,17 +7,10 @@ public class Solution
 {
     public int[] SmallerNumbersThanCurrent(int[] nums)
     {
-        int[] ans = new int[nums.Length];
-        for (int i = 0; i < nums.Length; i++)
+        var ans = new int[nums.Length];
+        for (var i = 0; i < nums.Length; i++)
         {
-            int cntr = 0;
-            for (int j = 0; j < nums.Length; j++)
-            {
-                if (nums[j] < nums[i])
-                {
-                    cntr++;
-                }
-            }
+            var cntr = nums.Count(t => t < nums[i]);
             ans[i] = cntr;
         }
         return ans;

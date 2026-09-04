@@ -8,7 +8,7 @@ public class Solution
     public int[] ExclusiveTime(int n, IList<string> logs)
     {
         var ans = new int[n];
-        Stack<int> call = new Stack<int>();
+        var call = new Stack<int>();
         var lastLogTimeStamp = -1;
         foreach (var log in logs)
         {
