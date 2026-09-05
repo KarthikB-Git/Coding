@@ -225,12 +225,26 @@ if ($Question.content -and $Params.Count -gt 0) {
                 $argNameStr = ($Params.Name) -join ', '
                 $InlineStr = $InlineDataList -join "`n"
 
+                $IsArrayOrList = ($expType -match '\[\]') -or ($ReturnType -match 'IList|List')
+                if ($IsArrayOrList) {
+                    $OutputWriteLines = @"
+        output.WriteLine($"Expected Output: [{string.Join(", ", expected)}]");
+        output.WriteLine($"Actual Output: [{string.Join(", ", actual)}]");
+"@
+                } else {
+                    $OutputWriteLines = @"
+        output.WriteLine($"Expected Output: {expected}");
+        output.WriteLine($"Actual Output: {actual}");
+"@
+                }
+
                 $GeneratedTestCode = @"
     [Theory]
 $InlineStr
     public void ${MethodName}_ReturnsExpectedResult($paramDeclStr)
     {
         var actual = _sut.${MethodName}($argNameStr);
+$OutputWriteLines
         Assert.Equal(expected, actual);
     }
 "@
@@ -282,13 +296,12 @@ public class Solution
 
 if ($GeneratedTestCode) {
     $TestContent = @"
-using LeetCodeTestbench.Common;
 using LeetCodeTestbench.Solutions.$CleanName;
-using Xunit;
+using Xunit.Abstractions;
 
 namespace LeetCodeTestbench.Tests.$CleanName;
 
-public class SolutionTests
+public class SolutionTests (ITestOutputHelper output)
 {
     private readonly Solution _sut = new();
 
@@ -303,13 +316,12 @@ elseif (Test-Path $TestTemplatePath) {
 }
 else {
     $TestContent = @"
-using LeetCodeTestbench.Common;
 using LeetCodeTestbench.Solutions.$CleanName;
-using Xunit;
+using Xunit.Abstractions;
 
 namespace LeetCodeTestbench.Tests.$CleanName;
 
-public class SolutionTests
+public class SolutionTests (ITestOutputHelper output)
 {
     private readonly Solution _sut = new();
 
@@ -319,6 +331,8 @@ public class SolutionTests
     {
         // Act
         // var actual = _sut.TwoSum(nums, target);
+        // output.WriteLine($"Expected Output: [{string.Join(", ", expected)}]");
+        // output.WriteLine($"Actual Output: [{string.Join(", ", actual)}]");
 
         // Assert
         // Assert.Equal(expected, actual);

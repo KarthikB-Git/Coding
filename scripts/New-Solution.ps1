@@ -68,13 +68,12 @@ if (Test-Path $TestTemplatePath) {
 }
 else {
     $TestContent = @"
-using LeetCodeTestbench.Common;
 using LeetCodeTestbench.Solutions.PXXXX_ProblemName;
-using Xunit;
+using Xunit.Abstractions;
 
 namespace LeetCodeTestbench.Tests.PXXXX_ProblemName;
 
-public class SolutionTests
+public class SolutionTests (ITestOutputHelper output)
 {
     private readonly Solution _sut = new();
 
@@ -85,6 +84,8 @@ public class SolutionTests
     {
         // Act
         // var actual = _sut.TwoSum(nums, target);
+        // output.WriteLine($"Expected Output: [{string.Join(", ", expected)}]");
+        // output.WriteLine($"Actual Output: [{string.Join(", ", actual)}]");
 
         // Assert
         // Assert.Equal(expected, actual);
