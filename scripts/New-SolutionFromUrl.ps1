@@ -197,7 +197,7 @@ if ($Question.content -and $Params.Count -gt 0) {
                 $argValues = @()
                 foreach ($p in $Params) {
                     $pName = [regex]::Escape($p.Name)
-                    if ($rawInput -match "$pName\s*=\s*(\[.*?\]|`".*?`"|\S+)") {
+                    if ($rawInput -match "$pName\s*=\s*(\[\[.*?\]\]|\[.*?\]|`".*?`"|\S+)") {
                         $valStr = $Matches[1].TrimEnd(',')
                         $argValues += Format-CSharpValue -RawValue $valStr -ParamType $p.Type
                     }
@@ -207,23 +207,26 @@ if ($Question.content -and $Params.Count -gt 0) {
 
                 if ($argValues.Count -eq $Params.Count) {
                     $allArgs = ($argValues + $formattedOutput) -join ', '
-                    $InlineDataList += "    [InlineData($allArgs)]"
+                    $InlineDataList += $allArgs
                 }
             }
 
             if ($InlineDataList.Count -gt 0) {
                 $paramDecls = @()
+                $theoryGenerics = @()
                 foreach ($p in $Params) {
                     $paramDecls += "$($p.Type) $($p.Name)"
+                    $theoryGenerics += $p.Type
                 }
                 $expType = $ReturnType
                 if ($ReturnType.StartsWith("IList<")) {
                     $expType = ($ReturnType -replace 'IList<', '' -replace '>', '') + "[]"
                 }
                 $paramDecls += "$expType expected"
+                $theoryGenerics += $expType
                 $paramDeclStr = $paramDecls -join ', '
+                $theoryGenericStr = $theoryGenerics -join ', '
                 $argNameStr = ($Params.Name) -join ', '
-                $InlineStr = $InlineDataList -join "`n"
 
                 $IsArrayOrList = ($expType -match '\[\]') -or ($ReturnType -match 'IList|List')
                 if ($IsArrayOrList) {
@@ -238,7 +241,29 @@ if ($Question.content -and $Params.Count -gt 0) {
 "@
                 }
 
-                $GeneratedTestCode = @"
+                $Has2DArray = ($ReturnType -match '\[\]\[\]|\[,\]|IList<IList|List<List') -or ($Params | Where-Object { $_.Type -match '\[\]\[\]|\[,\]|IList<IList|List<List' })
+
+                if ($Has2DArray) {
+                    $MemberDataRows = ($InlineDataList | ForEach-Object { "        { $_ }," }) -join "`n"
+                    $GeneratedTestCode = @"
+    public static TheoryData<$theoryGenericStr> TestCases => new()
+    {
+$MemberDataRows
+    };
+
+    [Theory]
+    [MemberData(nameof(TestCases))]
+    public void ${MethodName}_ReturnsExpectedResult($paramDeclStr)
+    {
+        var actual = _sut.${MethodName}($argNameStr);
+$OutputWriteLines
+        Assert.Equal(expected, actual);
+    }
+"@
+                }
+                else {
+                    $InlineStr = ($InlineDataList | ForEach-Object { "    [InlineData($_)]" }) -join "`n"
+                    $GeneratedTestCode = @"
     [Theory]
 $InlineStr
     public void ${MethodName}_ReturnsExpectedResult($paramDeclStr)
@@ -248,6 +273,7 @@ $OutputWriteLines
         Assert.Equal(expected, actual);
     }
 "@
+                }
             }
         }
     }
