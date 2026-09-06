@@ -16,13 +16,13 @@ public static class TestHelpers
             if (head is null)
             {
                 head = node;
-                tail = node;
             }
             else
             {
                 tail!.Next = node;
-                tail = node;
             }
+
+            tail = node;
         }
 
         return head;
@@ -36,7 +36,7 @@ public static class TestHelpers
             result.Add(head.Val);
             head = head.Next;
         }
-        return result.ToArray();
+        return [.. result];
     }
 
     // Level-order build, matching how LeetCode prints tree inputs.
@@ -49,20 +49,20 @@ public static class TestHelpers
         var root = new TreeNode(values[0]!.Value);
         var queue = new Queue<TreeNode>();
         queue.Enqueue(root);
-        int i = 1;
+        var i = 1;
 
         while (queue.Count > 0 && i < values.Length)
         {
             var node = queue.Dequeue();
 
-            if (i < values.Length && values[i] is int leftVal)
+            if (i < values.Length && values[i] is { } leftVal)
             {
                 node.Left = new TreeNode(leftVal);
                 queue.Enqueue(node.Left);
             }
             i++;
 
-            if (i < values.Length && values[i] is int rightVal)
+            if (i < values.Length && values[i] is { } rightVal)
             {
                 node.Right = new TreeNode(rightVal);
                 queue.Enqueue(node.Right);
