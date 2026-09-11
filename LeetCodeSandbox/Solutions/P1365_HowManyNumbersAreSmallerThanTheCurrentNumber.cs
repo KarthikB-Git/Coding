@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P1365_HowManyNumbersAreSmallerThanTheCurrentNumber;
+﻿using LeetCodeTestbench.Common;
 
-// https://leetcode.com/problems/how-many-numbers-are-smaller-than-the-current-number
+namespace LeetCodeTestbench.Solutions.P1365_HowManyNumbersAreSmallerThanTheCurrentNumber;
+
+// https://leetcode.com/problems/how-many-numbers-are-smaller-than-the-current-number/
 // Difficulty: Easy
 // Tags: Array, Hash Table, Sorting, Counting Sort
+[Problem(1365, "How Many Numbers Are Smaller Than The Current Number", Difficulty.Easy, Topic.Array, Topic.HashTable, Topic.Sorting, Topic.Other)]
 public class Solution
 {
     public int[] SmallerNumbersThanCurrent(int[] nums)

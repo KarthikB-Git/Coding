@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P316_RemoveDuplicateLetters;
+﻿using LeetCodeTestbench.Common;
+
+namespace LeetCodeTestbench.Solutions.P316_RemoveDuplicateLetters;
 
 // https://leetcode.com/problems/remove-duplicate-letters/
 // Difficulty: Medium
 // Tags: String, Stack, Greedy, Monotonic Stack
+[Problem(316, "Remove Duplicate Letters", Difficulty.Medium, Topic.String, Topic.Stack, Topic.Greedy, Topic.MonotonicStack)]
 public class Solution
 {
     public string RemoveDuplicateLetters(string s)

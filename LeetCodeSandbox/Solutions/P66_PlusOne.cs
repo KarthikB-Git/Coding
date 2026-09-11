@@ -1,8 +1,11 @@
+﻿using LeetCodeTestbench.Common;
+
 namespace LeetCodeTestbench.Solutions.P66_PlusOne;
 
 // https://leetcode.com/problems/plus-one/
 // Difficulty: Easy
 // Tags: Array, Math
+[Problem(66, "Plus One", Difficulty.Easy, Topic.Array, Topic.Math)]
 public class Solution
 {
     public int[] PlusOne(int[] digits)

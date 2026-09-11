@@ -1,8 +1,11 @@
+﻿using LeetCodeTestbench.Common;
+
 namespace LeetCodeTestbench.Solutions.P941_ValidMountainArray;
 
 // https://leetcode.com/problems/valid-mountain-array/
 // Difficulty: Easy
 // Tags: Array
+[Problem(941, "Valid Mountain Array", Difficulty.Easy, Topic.Array)]
 public class Solution
 {
     public bool ValidMountainArray(int[] arr)

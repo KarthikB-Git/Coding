@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P1470_ShuffleTheArray;
+﻿using LeetCodeTestbench.Common;
 
-// https://leetcode.com/problems/shuffle-the-array
+namespace LeetCodeTestbench.Solutions.P1470_ShuffleTheArray;
+
+// https://leetcode.com/problems/shuffle-the-array/
 // Difficulty: Easy
 // Tags: Array
+[Problem(1470, "Shuffle The Array", Difficulty.Easy, Topic.Array)]
 public class Solution
 {
     public int[] Shuffle(int[] nums, int n)

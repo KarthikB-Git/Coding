@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P84_LargestRectangleInHistogram;
+﻿using LeetCodeTestbench.Common;
+
+namespace LeetCodeTestbench.Solutions.P84_LargestRectangleInHistogram;
 
 // https://leetcode.com/problems/largest-rectangle-in-histogram/
 // Difficulty: Hard
 // Tags: Array, Stack, Monotonic Stack, Range Minimum/Maximum Query
+[Problem(84, "Largest Rectangle In Histogram", Difficulty.Hard, Topic.Array, Topic.Stack, Topic.MonotonicStack, Topic.Other)]
 public class Solution
 {
     public int LargestRectangleArea(int[] heights)

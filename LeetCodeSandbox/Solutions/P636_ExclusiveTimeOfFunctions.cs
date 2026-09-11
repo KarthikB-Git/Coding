@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P636_ExclusiveTimeOfFunctions;
+﻿using LeetCodeTestbench.Common;
+
+namespace LeetCodeTestbench.Solutions.P636_ExclusiveTimeOfFunctions;
 
 // https://leetcode.com/problems/exclusive-time-of-functions/
 // Difficulty: Medium
 // Tags: Array, Stack
+[Problem(636, "Exclusive Time Of Functions", Difficulty.Medium, Topic.Array, Topic.Stack)]
 public class Solution
 {
     public int[] ExclusiveTime(int n, IList<string> logs)

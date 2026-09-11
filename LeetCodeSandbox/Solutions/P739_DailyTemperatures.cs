@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P739_DailyTemperatures;
+﻿using LeetCodeTestbench.Common;
+
+namespace LeetCodeTestbench.Solutions.P739_DailyTemperatures;
 
 // https://leetcode.com/problems/daily-temperatures/
 // Difficulty: Medium
 // Tags: Array, Stack, Monotonic Stack
+[Problem(739, "Daily Temperatures", Difficulty.Medium, Topic.Array, Topic.Stack, Topic.MonotonicStack)]
 public class Solution
 {
     public int[] DailyTemperatures(int[] temperatures)

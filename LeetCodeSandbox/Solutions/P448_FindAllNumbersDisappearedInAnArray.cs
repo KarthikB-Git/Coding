@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P448_FindAllNumbersDisappearedInAnArray;
+﻿using LeetCodeTestbench.Common;
 
-// https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array
+namespace LeetCodeTestbench.Solutions.P448_FindAllNumbersDisappearedInAnArray;
+
+// https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
 // Difficulty: Easy
 // Tags: Array, Hash Table
+[Problem(448, "Find All Numbers Disappeared In An Array", Difficulty.Easy, Topic.Array, Topic.HashTable)]
 public class Solution
 {
     public IList<int> FindDisappearedNumbers(int[] nums)

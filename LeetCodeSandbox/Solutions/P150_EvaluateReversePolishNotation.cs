@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P150_EvaluateReversePolishNotation;
+﻿using LeetCodeTestbench.Common;
+
+namespace LeetCodeTestbench.Solutions.P150_EvaluateReversePolishNotation;
 
 // https://leetcode.com/problems/evaluate-reverse-polish-notation/
 // Difficulty: Medium
 // Tags: Array, Math, Stack
+[Problem(150, "Evaluate Reverse Polish Notation", Difficulty.Medium, Topic.Array, Topic.Math, Topic.Stack)]
 public class Solution
 {
     public int EvalRpn(string[] tokens)

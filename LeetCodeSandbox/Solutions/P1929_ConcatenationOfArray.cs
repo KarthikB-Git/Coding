@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P1929_ConcatenationOfArray;
+﻿using LeetCodeTestbench.Common;
 
-// https://leetcode.com/problems/concatenation-of-array
+namespace LeetCodeTestbench.Solutions.P1929_ConcatenationOfArray;
+
+// https://leetcode.com/problems/concatenation-of-array/
 // Difficulty: Easy
 // Tags: Array, Simulation
+[Problem(1929, "Concatenation Of Array", Difficulty.Easy, Topic.Array, Topic.Simulation)]
 public class Solution
 {
     public int[] GetConcatenation(int[] nums)

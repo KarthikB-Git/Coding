@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P412_FizzBuzz;
+using LeetCodeTestbench.Common;
+
+namespace LeetCodeTestbench.Solutions.P412_FizzBuzz;
 
 // https://leetcode.com/problems/fizz-buzz/
 // Difficulty: Easy
 // Tags: Math, String, Simulation
+[Problem(412, "Fizz Buzz", Difficulty.Easy, Topic.Math, Topic.String, Topic.Simulation)]
 public class Solution
 {
     public IList<string> FizzBuzz(int n)

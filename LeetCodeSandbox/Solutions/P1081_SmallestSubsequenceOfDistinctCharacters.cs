@@ -1,9 +1,12 @@
-﻿namespace LeetCodeTestbench.Solutions.P1081_SmallestSubsequenceOfDistinctCharacters;
+﻿using LeetCodeTestbench.Common;
+
+namespace LeetCodeTestbench.Solutions.P1081_SmallestSubsequenceOfDistinctCharacters;
 
 // https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/
 // Difficulty: Medium
 // Tags: String, Stack, Greedy, Monotonic Stack
 // Note: this problem is the same as P316 Remove Duplicate Letters.
+[Problem(1081, "Smallest Subsequence Of Distinct Characters", Difficulty.Medium, Topic.String, Topic.Stack, Topic.Greedy, Topic.MonotonicStack)]
 public class Solution
 {
     public string SmallestSubsequence(string s)

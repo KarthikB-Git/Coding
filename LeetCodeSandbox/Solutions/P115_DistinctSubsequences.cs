@@ -1,8 +1,11 @@
-﻿namespace LeetCodeTestbench.Solutions.P115_DistinctSubsequences;
+using LeetCodeTestbench.Common;
+
+namespace LeetCodeTestbench.Solutions.P115_DistinctSubsequences;
 
 // https://leetcode.com/problems/distinct-subsequences/
 // Difficulty: Hard
 // Tags: String, Dynamic Programming
+[Problem(115, "Distinct Subsequences", Difficulty.Hard, Topic.String, Topic.DynamicProgramming)]
 public class Solution
 {
     public int NumDistinct(string s, string t)
