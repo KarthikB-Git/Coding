@@ -60,6 +60,22 @@
                 "reveal": "always",
                 "panel": "shared"
             }
+        },
+        {
+            "label": "Update Table of Contents",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "D:\\Academics\\Coding\\Coding\\scripts\\Update-TableOfContents.ps1"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
         }
     ],
     "inputs": [
