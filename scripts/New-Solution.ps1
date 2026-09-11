@@ -98,6 +98,13 @@ public class SolutionTests (ITestOutputHelper output)
 $SolutionContent = $SolutionContent -replace 'PXXXX_ProblemName', $CleanName
 $SolutionContent = $SolutionContent -replace 'problem-name', $KebabSlug
 
+$ProbId = 0
+if ($CleanName -match '^P(\d+)') {
+    $ProbId = [int]$Matches[1]
+}
+$ProbTitle = $TitlePart -replace '([a-z0-9])([A-Z])', '$1 $2'
+$SolutionContent = $SolutionContent -replace '\[Problem\(0, "Problem Name", Difficulty\.Easy, Topic\.Other\)\]', "[Problem($ProbId, `"$ProbTitle`", Difficulty.Easy, Topic.Other)]"
+
 $TestContent = $TestContent -replace 'PXXXX_ProblemName', $CleanName
 
 # Create Solution File
@@ -116,4 +123,10 @@ if (Test-Path $TestFilePath) {
 else {
     Set-Content -Path $TestFilePath -Value $TestContent -Encoding UTF8
     Write-Host "Created Test File: $TestFilePath" -ForegroundColor Green
+}
+
+# Auto-update Table of Contents
+$UpdateTocScript = Join-Path $ScriptDir "Update-TableOfContents.ps1"
+if (Test-Path $UpdateTocScript) {
+    & $UpdateTocScript
 }

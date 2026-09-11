@@ -81,6 +81,56 @@ function ConvertTo-PascalCase {
     ($Words | ForEach-Object { $_.Substring(0,1).ToUpper() + $_.Substring(1) }) -join ''
 }
 
+function ConvertTo-TopicEnum {
+    param([string]$Tag)
+    $normalized = $Tag.ToLower() -replace '[^a-z0-9]', ''
+    switch ($normalized) {
+        "array" { "Topic.Array" }
+        "string" { "Topic.String" }
+        "hashtable" { "Topic.HashTable" }
+        "hashmap" { "Topic.HashTable" }
+        "dynamicprogramming" { "Topic.DynamicProgramming" }
+        "math" { "Topic.Math" }
+        "sorting" { "Topic.Sorting" }
+        "greedy" { "Topic.Greedy" }
+        "depthfirstsearch" { "Topic.DepthFirstSearch" }
+        "dfs" { "Topic.DepthFirstSearch" }
+        "breadthfirstsearch" { "Topic.BreadthFirstSearch" }
+        "bfs" { "Topic.BreadthFirstSearch" }
+        "binarysearch" { "Topic.BinarySearch" }
+        "matrix" { "Topic.Matrix" }
+        "twopointers" { "Topic.TwoPointers" }
+        "bitmanipulation" { "Topic.BitManipulation" }
+        "stack" { "Topic.Stack" }
+        "heap" { "Topic.Heap" }
+        "heappriorityqueue" { "Topic.Heap" }
+        "graph" { "Topic.Graph" }
+        "prefixsum" { "Topic.PrefixSum" }
+        "simulation" { "Topic.Simulation" }
+        "design" { "Topic.Design" }
+        "counting" { "Topic.Counting" }
+        "backtracking" { "Topic.Backtracking" }
+        "slidingwindow" { "Topic.SlidingWindow" }
+        "unionfind" { "Topic.UnionFind" }
+        "linkedlist" { "Topic.LinkedList" }
+        "tree" { "Topic.Tree" }
+        "binarytree" { "Topic.BinaryTree" }
+        "monotonicstack" { "Topic.MonotonicStack" }
+        "trie" { "Topic.Trie" }
+        "divideandconquer" { "Topic.DivideAndConquer" }
+        "queue" { "Topic.Queue" }
+        "recursion" { "Topic.Recursion" }
+        "memoization" { "Topic.Memoization" }
+        "segmenttree" { "Topic.SegmentTree" }
+        "binaryindexedtree" { "Topic.BinaryIndexedTree" }
+        "shortestpath" { "Topic.ShortestPath" }
+        "gametheory" { "Topic.GameTheory" }
+        "orderedset" { "Topic.OrderedSet" }
+        "rollinghash" { "Topic.RollingHash" }
+        default { "Topic.Other" }
+    }
+}
+
 function Format-CSharpValue {
     param(
         [string]$RawValue,
@@ -374,6 +424,13 @@ $UrlComment = "// https://leetcode.com/problems/$KebabSlug/"
 $TaggedHeader = "$UrlComment`n// Difficulty: $Difficulty`n// Tags: $TopicTags"
 $SolutionContent = $SolutionContent -replace [regex]::Escape($UrlComment), $TaggedHeader
 
+$ProblemFrontendId = [int]$Question.questionFrontendId
+$EscapedTitle = $Question.title -replace '"', '\"'
+$EnumTopicsList = ($Question.topicTags | ForEach-Object { ConvertTo-TopicEnum $_.name }) -join ', '
+if (-not $EnumTopicsList) { $EnumTopicsList = "Topic.Other" }
+$ProblemAttributeLine = "[Problem($ProblemFrontendId, `"$EscapedTitle`", Difficulty.$Difficulty, $EnumTopicsList)]"
+$SolutionContent = $SolutionContent -replace '\[Problem\(0, "Problem Name", Difficulty\.Easy, Topic\.Other\)\]', $ProblemAttributeLine
+
 if ($MethodSignature) {
     if ($MethodSignature -match '\{\s*\}') {
         $MethodSignature = $MethodSignature -replace '\{\s*\}', "{`n        throw new System.NotImplementedException();`n    }"
@@ -412,4 +469,10 @@ if (Test-Path $TestFilePath) {
 else {
     Set-Content -Path $TestFilePath -Value $TestContent -Encoding UTF8
     Write-Host "Created Test File: $TestFilePath" -ForegroundColor Green
+}
+
+# Auto-update Table of Contents
+$UpdateTocScript = Join-Path $ScriptDir "Update-TableOfContents.ps1"
+if (Test-Path $UpdateTocScript) {
+    & $UpdateTocScript
 }
