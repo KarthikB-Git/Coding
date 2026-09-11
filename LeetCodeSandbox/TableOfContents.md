@@ -3,8 +3,8 @@
 > Auto-generated index of solved LeetCode problems.
 
 ### Progress Summary
-- **Total Solved**: 24
-- **Easy**: 16
+- **Total Solved**: 25
+- **Easy**: 17
 - **Medium**: 6
 - **Hard**: 2
 
@@ -36,4 +36,4 @@
 | 1672 | [Richest Customer Wealth](https://leetcode.com/problems/richest-customer-wealth/) | Easy | Array, Matrix | [P1672_RichestCustomerWealth.cs](Solutions/P1672_RichestCustomerWealth.cs) |
 | 1700 | [Number Of Students Unable To Eat Lunch](https://leetcode.com/problems/number-of-students-unable-to-eat-lunch/) | Easy | Array, Stack, Queue, Simulation | [P1700_NumberOfStudentsUnableToEatLunch.cs](Solutions/P1700_NumberOfStudentsUnableToEatLunch.cs) |
 | 1929 | [Concatenation Of Array](https://leetcode.com/problems/concatenation-of-array/) | Easy | Array, Simulation | [P1929_ConcatenationOfArray.cs](Solutions/P1929_ConcatenationOfArray.cs) |
-| 3483 | [Unique 3-Digit Even Numbers](https://leetcode.com/problems/unique-3-digit-even-numbers/) | Easy | Array, Hash Table, Recursion, Other | [P3483_Unique3DigitEvenNumbers.cs](Solutions/P3483_Unique3DigitEvenNumbers.cs) |
+| 3483 | [Unique 3-Digit Even Numbers](https://leetcode.com/problems/unique-3-digit-even-numbers/) | Easy | Array, Hash Table, Recursion, Enumeration, Other | [P3483_Unique3DigitEvenNumbers.cs](Solutions/P3483_Unique3DigitEvenNumbers.cs) |
