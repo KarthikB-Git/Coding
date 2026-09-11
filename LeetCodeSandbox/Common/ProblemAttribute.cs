@@ -40,6 +40,7 @@ public enum Topic
     DivideAndConquer,
     Queue,
     Recursion,
+    Enumeration,
     Memoization,
     SegmentTree,
     BinaryIndexedTree,

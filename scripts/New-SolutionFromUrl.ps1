@@ -120,6 +120,7 @@ function ConvertTo-TopicEnum {
         "divideandconquer" { "Topic.DivideAndConquer" }
         "queue" { "Topic.Queue" }
         "recursion" { "Topic.Recursion" }
+        "enumeration" { "Topic.Enumeration" }
         "memoization" { "Topic.Memoization" }
         "segmenttree" { "Topic.SegmentTree" }
         "binaryindexedtree" { "Topic.BinaryIndexedTree" }
