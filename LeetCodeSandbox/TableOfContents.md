@@ -3,9 +3,9 @@
 > Auto-generated index of solved LeetCode problems.
 
 ### Progress Summary
-- **Total Solved**: 25
+- **Total Solved**: 26
 - **Easy**: 17
-- **Medium**: 6
+- **Medium**: 7
 - **Hard**: 2
 
 ---
@@ -36,4 +36,5 @@
 | 1672 | [Richest Customer Wealth](https://leetcode.com/problems/richest-customer-wealth/) | Easy | Array, Matrix | [P1672_RichestCustomerWealth.cs](Solutions/P1672_RichestCustomerWealth.cs) |
 | 1700 | [Number Of Students Unable To Eat Lunch](https://leetcode.com/problems/number-of-students-unable-to-eat-lunch/) | Easy | Array, Stack, Queue, Simulation | [P1700_NumberOfStudentsUnableToEatLunch.cs](Solutions/P1700_NumberOfStudentsUnableToEatLunch.cs) |
 | 1929 | [Concatenation Of Array](https://leetcode.com/problems/concatenation-of-array/) | Easy | Array, Simulation | [P1929_ConcatenationOfArray.cs](Solutions/P1929_ConcatenationOfArray.cs) |
+| 2265 | [Count Nodes Equal to Average of Subtree](https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/) | Medium | Tree, Depth First Search, Binary Tree | [P2265_CountNodesEqualToAverageOfSubtree.cs](Solutions/P2265_CountNodesEqualToAverageOfSubtree.cs) |
 | 3483 | [Unique 3-Digit Even Numbers](https://leetcode.com/problems/unique-3-digit-even-numbers/) | Easy | Array, Hash Table, Recursion, Enumeration, Other | [P3483_Unique3DigitEvenNumbers.cs](Solutions/P3483_Unique3DigitEvenNumbers.cs) |
