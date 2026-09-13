@@ -3,9 +3,9 @@
 > Auto-generated index of solved LeetCode problems.
 
 ### Progress Summary
-- **Total Solved**: 26
+- **Total Solved**: 27
 - **Easy**: 17
-- **Medium**: 7
+- **Medium**: 8
 - **Hard**: 2
 
 ---
@@ -24,6 +24,7 @@
 | 636 | [Exclusive Time Of Functions](https://leetcode.com/problems/exclusive-time-of-functions/) | Medium | Array, Stack | [P636_ExclusiveTimeOfFunctions.cs](Solutions/P636_ExclusiveTimeOfFunctions.cs) |
 | 645 | [Set Mismatch](https://leetcode.com/problems/set-mismatch/) | Easy | Array, Hash Table, Bit Manipulation, Sorting | [P645_SetMismatch.cs](Solutions/P645_SetMismatch.cs) |
 | 739 | [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) | Medium | Array, Stack, Monotonic Stack | [P739_DailyTemperatures.cs](Solutions/P739_DailyTemperatures.cs) |
+| 835 | [Image Overlap](https://leetcode.com/problems/image-overlap/) | Medium | Array, Matrix | [P835_ImageOverlap.cs](Solutions/P835_ImageOverlap.cs) |
 | 876 | [Middle Of The Linked List](https://leetcode.com/problems/middle-of-the-linked-list/) | Easy | Linked List, Two Pointers | [P876_MiddleOfTheLinkedList.cs](Solutions/P876_MiddleOfTheLinkedList.cs) |
 | 941 | [Valid Mountain Array](https://leetcode.com/problems/valid-mountain-array/) | Easy | Array | [P941_ValidMountainArray.cs](Solutions/P941_ValidMountainArray.cs) |
 | 1081 | [Smallest Subsequence Of Distinct Characters](https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/) | Medium | String, Stack, Greedy, Monotonic Stack | [P1081_SmallestSubsequenceOfDistinctCharacters.cs](Solutions/P1081_SmallestSubsequenceOfDistinctCharacters.cs) |
