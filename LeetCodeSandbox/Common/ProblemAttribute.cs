@@ -1,5 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
+
+#pragma warning disable IDE0051
+
 namespace LeetCodeTestbench.Common;
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public enum Difficulty
 {
     Easy,
@@ -7,6 +12,7 @@ public enum Difficulty
     Hard
 }
 
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public enum Topic
 {
     Array,
@@ -48,9 +54,39 @@ public enum Topic
     GameTheory,
     OrderedSet,
     RollingHash,
+    Bitmask,
+    Concurrency,
+    NumberTheory,
+    Geometry,
+    TopologicalSort,
+    Quickselect,
+    SuffixArray,
+    DataStream,
+    Interactive,
+    StringMatching,
+    MonotonicQueue,
+    Combinatorics,
+    ProbabilityAndStatistics,
+    BucketSort,
+    CountingSort,
+    RadixSort,
+    MergeSort,
+    MinimumSpanningTree,
+    LineSweep,
+    ReservoirSampling,
+    RejectionSampling,
+    StronglyConnectedComponent,
+    EulerianCircuit,
+    BiconnectedComponent,
+    Brainteaser,
+    DoublyLinkedList,
+    HashFunction,
+    BinarySearchTree,
+    Randomized,
+    Shell,
     Other
 }
-
+[SuppressMessage("ReSharper", "RedundantAttributeUsageProperty")]
 [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
 public sealed class ProblemAttribute : Attribute
 {
@@ -58,7 +94,7 @@ public sealed class ProblemAttribute : Attribute
     public string Title { get; }
     public Difficulty Difficulty { get; }
     public Topic[] Topics { get; }
-
+    [SuppressMessage("ReSharper", "ConvertToPrimaryConstructor")]
     public ProblemAttribute(int id, string title, Difficulty difficulty, params Topic[]? topics)
     {
         Id = id;
