@@ -3,8 +3,8 @@
 > Auto-generated index of solved LeetCode problems.
 
 ### Progress Summary
-- **Total Solved**: 28
-- **Easy**: 18
+- **Total Solved**: 29
+- **Easy**: 19
 - **Medium**: 8
 - **Hard**: 2
 
@@ -40,3 +40,4 @@
 | 2265 | [Count Nodes Equal to Average of Subtree](https://leetcode.com/problems/count-nodes-equal-to-average-of-subtree/) | Medium | Tree, Depth First Search, Binary Tree | [P2265_CountNodesEqualToAverageOfSubtree.cs](Solutions/P2265_CountNodesEqualToAverageOfSubtree.cs) |
 | 3483 | [Unique 3-Digit Even Numbers](https://leetcode.com/problems/unique-3-digit-even-numbers/) | Easy | Array, Hash Table, Recursion, Enumeration, Other | [P3483_Unique3DigitEvenNumbers.cs](Solutions/P3483_Unique3DigitEvenNumbers.cs) |
 | 3875 | [Construct Uniform Parity Array I](https://leetcode.com/problems/construct-uniform-parity-array-i/) | Easy | Array, Math | [P3875_ConstructUniformParityArrayI.cs](Solutions/P3875_ConstructUniformParityArrayI.cs) |
+| 3903 | [Smallest Stable Index I](https://leetcode.com/problems/smallest-stable-index-i/) | Easy | Array, Prefix Sum | [P3903_SmallestStableIndexI.cs](Solutions/P3903_SmallestStableIndexI.cs) |
