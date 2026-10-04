@@ -34,13 +34,20 @@ $TemplatesDir = Join-Path $SandboxDir "Templates"
 
 $SolutionTemplatePath = Join-Path $TemplatesDir "SolutionBoilerplate.cs"
 $TestTemplatePath = Join-Path $TemplatesDir "SolutionTestsBoilerplate.cs"
+$ExplanationTemplatePath = Join-Path $TemplatesDir "ExplanationBoilerplate.md"
 
 if (-not (Test-Path $SolutionsDir)) {
     New-Item -ItemType Directory -Path $SolutionsDir -Force | Out-Null
 }
 
-$SolutionFilePath = Join-Path $SolutionsDir "$CleanName.cs"
-$TestFilePath = Join-Path $SolutionsDir "${CleanName}Test.cs"
+$ProblemDir = Join-Path $SolutionsDir $CleanName
+$SolutionFilePath = Join-Path $ProblemDir "$CleanName.cs"
+$TestFilePath = Join-Path $ProblemDir "${CleanName}Test.cs"
+$ExplanationFilePath = Join-Path $ProblemDir "README.md"
+
+if (-not (Test-Path $ProblemDir)) {
+    New-Item -ItemType Directory -Path $ProblemDir -Force | Out-Null
+}
 
 # 1. Load Solution Template
 if (Test-Path $SolutionTemplatePath) {
@@ -107,6 +114,17 @@ $SolutionContent = $SolutionContent -replace '\[Problem\(0, "Problem Name", Diff
 
 $TestContent = $TestContent -replace 'PXXXX_ProblemName', $CleanName
 
+if (Test-Path $ExplanationTemplatePath) {
+    $ExplanationContent = Get-Content -Path $ExplanationTemplatePath -Raw -Encoding UTF8
+}
+else {
+    $ExplanationContent = "# [Problem ID] - [Problem Title]`n"
+}
+
+$ExplanationContent = $ExplanationContent -replace '\[Problem ID\]', $ProbId
+$ExplanationContent = $ExplanationContent -replace '\[Problem Title\]', $ProbTitle
+$ExplanationContent = $ExplanationContent -replace 'problem-slug', $KebabSlug
+
 # Create Solution File
 if (Test-Path $SolutionFilePath) {
     Write-Warning "Solution file already exists: $SolutionFilePath"
@@ -123,6 +141,14 @@ if (Test-Path $TestFilePath) {
 else {
     Set-Content -Path $TestFilePath -Value $TestContent -Encoding UTF8
     Write-Host "Created Test File: $TestFilePath" -ForegroundColor Green
+}
+
+if (Test-Path $ExplanationFilePath) {
+    Write-Warning "Explanation file already exists: $ExplanationFilePath"
+}
+else {
+    Set-Content -Path $ExplanationFilePath -Value $ExplanationContent -Encoding UTF8
+    Write-Host "Created Explanation File: $ExplanationFilePath" -ForegroundColor Green
 }
 
 # Auto-update Table of Contents

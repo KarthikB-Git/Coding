@@ -16,15 +16,19 @@ public class SolutionTests
             var data = new TheoryData<int[], int[]>();
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             
-            // Check project source directory first, then fallback to AppContext.BaseDirectory
-            string directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "TestCases");
+            const string problemDirectory = "P448_FindAllNumbersDisappearedInAnArray";
+            string directoryPath = Path.Combine(AppContext.BaseDirectory, "Solutions", problemDirectory);
             if (!Directory.Exists(directoryPath))
             {
-                directoryPath = Path.Combine(AppContext.BaseDirectory, "TestCases");
+                directoryPath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "LeetCodeSandbox",
+                    "Solutions",
+                    problemDirectory);
             }
             if (Directory.Exists(directoryPath))
             {
-                foreach (string jsonPath in Directory.GetFiles(directoryPath, "P448_*.json"))
+                foreach (string jsonPath in Directory.GetFiles(directoryPath, "*.json"))
                 {
                     string json = File.ReadAllText(jsonPath).Trim();
                     if (string.IsNullOrWhiteSpace(json)) continue;
