@@ -3,8 +3,8 @@
 > Auto-generated index of solved LeetCode problems.
 
 ### Progress Summary
-- **Total Solved**: 29
-- **Easy**: 19
+- **Total Solved**: 30
+- **Easy**: 20
 - **Medium**: 8
 - **Hard**: 2
 
@@ -12,6 +12,7 @@
 
 | # | Problem Title | Difficulty | Topic Tags | Solution File | Explanation |
 | :---: | :--- | :---: | :--- | :---: | :---: |
+| 14 | [Longest Common Prefix](https://leetcode.com/problems/longest-common-prefix/) | Easy | Array, String, Trie | [P14_LongestCommonPrefix.cs](Solutions/P14_LongestCommonPrefix/P14_LongestCommonPrefix.cs) | [README](Solutions/P14_LongestCommonPrefix/README.md) |
 | 66 | [Plus One](https://leetcode.com/problems/plus-one/) | Easy | Array, Math | [P66_PlusOne.cs](Solutions/P66_PlusOne/P66_PlusOne.cs) | [README](Solutions/P66_PlusOne/README.md) |
 | 84 | [Largest Rectangle In Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Hard | Array, Stack, Monotonic Stack, Other | [P84_LargestRectangleInHistogram.cs](Solutions/P84_LargestRectangleInHistogram/P84_LargestRectangleInHistogram.cs) | [README](Solutions/P84_LargestRectangleInHistogram/README.md) |
 | 115 | [Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/) | Hard | String, Dynamic Programming | [P115_DistinctSubsequences.cs](Solutions/P115_DistinctSubsequences/P115_DistinctSubsequences.cs) | [README](Solutions/P115_DistinctSubsequences/README.md) |
