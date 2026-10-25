@@ -33,7 +33,7 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "D:\\Academics\\Coding\\Coding\\scripts\\New-Solution.ps1",
+                "${workspaceFolder}/scripts/New-Solution.ps1",
                 "-Name",
                 "${input:problemName}"
             ],
@@ -51,15 +51,28 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "D:\\Academics\\Coding\\Coding\\scripts\\New-SolutionFromUrl.ps1",
+                "${workspaceFolder}/scripts/New-SolutionFromUrl.ps1",
                 "-Url",
-                "'${input:problemUrl}'"
+                "${input:problemUrl}"
             ],
             "problemMatcher": [],
             "presentation": {
                 "reveal": "always",
                 "panel": "shared"
             }
+        },
+        {
+            "label": "Generate Problem Test Bench (AI)",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy", "Bypass", "-File",
+                "${workspaceFolder}/scripts/New-ProblemTestBench.ps1",
+                "-ProblemName", "${input:problemName}",
+                "-RunAgent", "-ReplaceExistingTests"
+            ],
+            "problemMatcher": [],
+            "presentation": { "reveal": "always", "panel": "shared" }
         },
         {
             "label": "Update Table of Contents",
@@ -69,7 +82,7 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "D:\\Academics\\Coding\\Coding\\scripts\\Update-TableOfContents.ps1"
+                "${workspaceFolder}/scripts/Update-TableOfContents.ps1"
             ],
             "problemMatcher": [],
             "presentation": {

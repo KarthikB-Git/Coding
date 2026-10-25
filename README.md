@@ -103,6 +103,35 @@ Follow these simple steps when solving a new problem (e.g. `P2_AddTwoNumbers`):
 
 ---
 
+## Problem-specific test benches with an AI agent
+
+Scaffold a problem from its URL, then generate tests that follow its actual judge contract:
+
+```powershell
+./scripts/New-SolutionFromUrl.ps1 -Url https://leetcode.com/problems/remove-duplicates-from-sorted-array/
+./scripts/New-ProblemTestBench.ps1 -ProblemName P26_RemoveDuplicatesFromSortedArray -RunAgent -ReplaceExistingTests
+```
+
+The URL script saves the complete description to `ProblemStatement.html` beside the solution. Custom-judge and void-method problems receive an explicitly skipped placeholder instead of return-only assertions. The second command invokes your installed, signed-in Codex CLI, using its configured model and a workspace-write sandbox, to analyze the statement and C# signatures and write the problem's `*Test.cs` plus `TestBench.md`. The VS Code task **Generate Problem Test Bench (AI)** runs the same generation step and authorizes updating that problem's existing test file.
+
+The agent is instructed to validate return values and required input mutations, ignore unspecified state, cover valid edge cases, use an independent oracle for seeded random tests where practical, and check the validator against incorrect outcomes. It must run the filtered xUnit suite and record its results. An unsolved solution can legitimately fail these tests; the agent must leave the implementation alone. Review the generated contract and assertions, since generated tests still require judgment and cannot guarantee passing LeetCode's hidden tests.
+
+For an existing or manually scaffolded problem, supply the full statement yourself:
+
+```powershell
+./scripts/New-ProblemTestBench.ps1 -ProblemName P66_PlusOne -StatementPath ./problem.md -RunAgent -ReplaceExistingTests
+```
+
+Omit `-RunAgent` to emit the complete task as plain text for inspection or use with another coding agent. This mode requires no CLI or network access and changes no files. `-ReplaceExistingTests` explicitly permits updates to the named test file; without it, execution refuses to overwrite that file. Keep the complete statement, including constraints and custom-judge code, in the supplied text, Markdown, or HTML file. The generated `TestBench.md` records judge semantics, oracle design, coverage, and verification limitations. The script checks that both output files exist; the agent's report and test results still need review.
+
+To check the tooling without an AI call or LeetCode access:
+
+```powershell
+./scripts/tests/Test-ProblemTestBench.ps1
+```
+
+---
+
 ## 💡 Linked Lists & Binary Trees Helpers
 
 Use `Common/TestHelpers.cs` to construct `ListNode` or `TreeNode` test inputs cleanly:

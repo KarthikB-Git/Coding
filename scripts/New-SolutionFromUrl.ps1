@@ -231,8 +231,9 @@ if ($CSharpSnippet) {
 # 5. Extract example test cases from HTML description
 # ------------------------------------------------------------------
 $GeneratedTestCode = $null
+$NeedsCustomJudge = $Question.content -match '(?i)custom\s+judge'
 
-if ($Question.content -and $Params.Count -gt 0) {
+if ($Question.content -and $Params.Count -gt 0 -and -not $NeedsCustomJudge -and $ReturnType -ne 'void') {
     $Regex = '(?s)<strong>Input:</strong>\s*(.*?)\s*<strong>Output:</strong>\s*(.*?)(?=\s*<strong>Explanation:</strong>|\s*</pre>|\s*<strong|\s*&nbsp;|\r?\n\r?\n|$)'
     $MatchesFound = [regex]::Matches($Question.content, $Regex)
 
@@ -378,7 +379,18 @@ public class Solution
 "@
 }
 
-if ($GeneratedTestCode) {
+if ($NeedsCustomJudge -or $ReturnType -eq 'void') {
+    $TestContent = @"
+namespace LeetCodeTestbench.Tests.$CleanName;
+
+public class SolutionTests
+{
+    [Fact(Skip = "Problem-specific judge pending. Run scripts/New-ProblemTestBench.ps1 for $CleanName.")]
+    public void JudgeContract_Pending() { }
+}
+"@
+}
+elseif ($GeneratedTestCode) {
     $TestContent = @"
 using LeetCodeTestbench.Solutions.$CleanName;
 using Xunit.Abstractions;
@@ -502,6 +514,13 @@ else {
 }
 
 # Auto-update Table of Contents
+$StatementFilePath = Join-Path $ProblemDir 'ProblemStatement.html'
+if (-not (Test-Path -LiteralPath $StatementFilePath) -and $Question.content) {
+    Set-Content -LiteralPath $StatementFilePath -Value $Question.content -Encoding UTF8
+    Write-Host "Saved full problem statement: $StatementFilePath" -ForegroundColor Green
+}
+Write-Host "Generate a problem-specific bench: ./scripts/New-ProblemTestBench.ps1 -ProblemName $CleanName -RunAgent -ReplaceExistingTests" -ForegroundColor Cyan
+
 $UpdateTocScript = Join-Path $ScriptDir "Update-TableOfContents.ps1"
 if (Test-Path $UpdateTocScript) {
     & $UpdateTocScript
