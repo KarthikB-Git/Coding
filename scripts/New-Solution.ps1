@@ -124,6 +124,9 @@ else {
 $ExplanationContent = $ExplanationContent -replace '\[Problem ID\]', $ProbId
 $ExplanationContent = $ExplanationContent -replace '\[Problem Title\]', $ProbTitle
 $ExplanationContent = $ExplanationContent -replace 'problem-slug', $KebabSlug
+$ExplanationContent = $ExplanationContent -replace '\[Difficulty\]', 'Unknown'
+$ExplanationContent = $ExplanationContent -replace '\[Topics\]', 'None'
+$ExplanationContent = $ExplanationContent -replace '\[Solution File\]', $CleanName
 
 # Create Solution File
 if (Test-Path $SolutionFilePath) {

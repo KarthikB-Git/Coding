@@ -449,8 +449,9 @@ else {
 $ExplanationContent = $ExplanationContent -replace '\[Problem ID\]', $ProblemFrontendId
 $ExplanationContent = $ExplanationContent -replace '\[Problem Title\]', $Question.title
 $ExplanationContent = $ExplanationContent -replace 'problem-slug', $KebabSlug
-$ExplanationContent = $ExplanationContent -replace '\*\*Difficulty:\*\* Unknown', "**Difficulty:** $Difficulty"
-$ExplanationContent = $ExplanationContent -replace '\*\*Topics:\*\* None', "**Topics:** $TopicTags"
+$ExplanationContent = $ExplanationContent -replace '\[Difficulty\]', $Difficulty
+$ExplanationContent = $ExplanationContent -replace '\[Topics\]', $TopicTags
+$ExplanationContent = $ExplanationContent -replace '\[Solution File\]', $CleanName
 
 if ($MethodSignature) {
     if ($MethodSignature -match '\{\s*\}') {
